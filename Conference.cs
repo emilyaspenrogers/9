@@ -8,6 +8,8 @@ namespace ERogersProgram9
 
     public enum AccomodationType
     {
+    // is adding 1,2 and 3 the right thing to do here? I then call to this enumeration in my switch method below 
+    //'ReturnAccomodationRate' and I dont' think I wrote this correctly. 
         Single = 1,
         Double = 2,
         Suite = 3
@@ -109,6 +111,8 @@ namespace ERogersProgram9
         #endregion
 
         #region "Instance Methods"
+            
+           //I have no clue if this is how you would write a switch method that returns the rates for the three accomodation choices  
 
         private decimal ReturnAccomodationRate()
         {
