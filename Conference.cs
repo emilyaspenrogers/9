@@ -1,3 +1,7 @@
+using System;
+using System.Collections.Generic;
+using System.Text;
+
 namespace ERogersProgram9
 {
     #region "Enumeration"
@@ -106,26 +110,48 @@ namespace ERogersProgram9
 
         #region "Instance Methods"
 
+        //private decimal ReturnAccomodationRate(AccomodationType accomodationChoice)
+        //{
+
+
+        //    switch (accomodationChoice)
+        //    {
+        //        case AccomodationType.Single:
+        //            {
+        //                return (decimal)(83.61 * (numberOfAttendees * numberOfDays));
+        //            }
+        //        case AccomodationType.Double:
+        //            {
+        //                return (decimal)(56.74 * (numberOfAttendees * numberOfDays));
+        //            }
+        //        case AccomodationType.Suite:
+        //            {
+        //                return (decimal)(101.95 * (numberOfAttendees * numberOfDays));
+        //            }
+        //    }
+        //    return AccommodationCharge;
+        //}
+
         private decimal ReturnAccomodationRate(AccomodationType accomodationChoice)
         {
-            
+
 
             switch (accomodationChoice)
             {
                 case AccomodationType.Single:
                     {
-                        return (decimal)(83.61 * (numberOfAttendees * numberOfDays));
+                        return (decimal)(83.61);
                     }
                 case AccomodationType.Double:
                     {
-                        return (decimal)(56.74 * (numberOfAttendees * numberOfDays));
+                        return (decimal)(56.74);
                     }
                 case AccomodationType.Suite:
                     {
-                        return (decimal)(101.95 * (numberOfAttendees * numberOfDays));
+                        return (decimal)(101.95);
                     }
             }
-            return AccommodationCharge;
+            return ReturnAccomodationRate(accomodationChoice);
         }
 
         private void CalculateConferenceCharge(int numberOfAttendees, int numberOfDays, AccomodationType accomodationChoice, bool internetAccess, bool recCenterAccess)
@@ -135,8 +161,8 @@ namespace ERogersProgram9
             const double accomodationDiscount = .12;
             const double optionalDiscount = .075;
 
-            decimal accommodationCharge = ReturnAccomodationRate(AccomodationChoice);
-            //decimal accommodationCharge = ReturnAccomodationRate() * (numberOfAttendees * numberOfDays);
+            //decimal accommodationCharge = ReturnAccomodationRate(AccomodationChoice);
+            decimal accommodationCharge = ReturnAccomodationRate(accomodationChoice) * (numberOfAttendees * numberOfDays);
             decimal totalInternetCharge = dailyInternet * (numberOfDays * numberOfAttendees);
             decimal totalRecCenterCharge = dailyRec * (numberOfDays * numberOfAttendees);
             decimal optionalServicesCharge = totalInternetCharge + totalRecCenterCharge;
@@ -170,4 +196,33 @@ namespace ERogersProgram9
                 discount = 0; 
             }
 
+          
+
+            //need to update code below that determines whether or not internet access and rec access was selected or not i.e. 
+            // if (internetaccess is selected { figure out totalinternet charge }. 
+
+            //if (totalInternetCharge > 0 && totalRecCenterCharge > 0 )
+            //{
+            //    optionalServicesCharge = totalInternetCharge + totalRecCenterCharge;
+            //}
+            //else if (totalRecCenterCharge > 0 && totalInternetCharge == 0)
+            //{
+            //    optionalServicesCharge = totalRecCenterCharge;
+            //}
+            //else if (totalInternetCharge > 0 && totalRecCenterCharge == 0)
+            //{
+            //    optionalServicesCharge = totalInternetCharge;
+            //}
+            //else
+            //{
+            //    optionalServicesCharge = 0; 
+            //}
+
             totalCharge = accommodationCharge + optionalServicesCharge - discount;
+
+            #endregion
+        }
+
+    }
+
+}
