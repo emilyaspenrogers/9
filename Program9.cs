@@ -12,7 +12,7 @@ namespace ERogersProgram9
     {
         private Conference aConference;
         private string name;
-        private int numberOfAttendees, numberOfNights;
+        private int numberOfAttendees, numberOfDays;
         private bool internetAccess, recCenterAccess;
         private AccomodationType accomodationChoice;
 
@@ -40,7 +40,7 @@ namespace ERogersProgram9
 
             // instantiate object
 
-            aConference = new Conference(name, numberOfAttendees, numberOfNights, accomodationChoice, internetAccess, recCenterAccess);
+            aConference = new Conference(name, numberOfAttendees, numberOfDays, accomodationChoice, internetAccess, recCenterAccess);
 
             //cal Dispaly Charges Method
 
@@ -58,23 +58,64 @@ namespace ERogersProgram9
 
             AssignInputs();
 
-
-            //reset properties
+            // reset properties
 
             aConference.AccomodationChoice = accomodationChoice;
             aConference.NumberOfAttendees = numberOfAttendees;
-            aConference.NumberOfDays = numberOfNights;
+            aConference.NumberOfDays = numberOfDays;
             aConference.InternetAccess = internetAccess;
             aConference.RecCenterAccess = recCenterAccess;
 
             // call Display Charges Method
+
+            DisplayCharges();
+        }
+
+        private void btnReset_Click(object sender, EventArgs e)
+        {
+            // reset the form for new inputs
+
+            tbxName.Clear();
+            numNumberOfAttendees.Value = numNumberOfAttendees.Minimum;
+            numNumberOfNights.Value = numNumberOfNights.Minimum;
+            rbtnSingle.Checked = true;
+            rbtnDouble.Checked = false;
+            rbtnSuite.Checked = false;
+            chbxInternetAccess.Checked = false;
+            chbxRecCenterAccess.Checked = false;
+            lblResults.Text = null;
+
+            //enable/disable controls
+
+            tbxName.Enabled = true;
+            btnCreateConference.Enabled = true;
+            btnModifyConference.Enabled = false;
+
+            //set focus
+            tbxName.Focus();
+        }
+
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            DialogResult aResult;
+
+            aResult = MessageBox.Show("Quit?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
+
+            if (aResult == DialogResult.Yes)
+            {
+                this.Close();
+            }
+            else
+            {
+                tbxName.Focus();
+            }
         }
 
         private void AssignInputs()
         {
             name = tbxName.Text;
             numberOfAttendees = Convert.ToInt32(numNumberOfAttendees.Value);
-            numberOfNights = Convert.ToInt32(numNumberOfNights.Value);
+            numberOfDays = Convert.ToInt32(numNumberOfNights.Value);
 
             if (rbtnSingle.Checked)
             {
@@ -97,11 +138,11 @@ namespace ERogersProgram9
         {
             //prepare message to dispaly
 
-            string strCharges = $"Accommodation Charge: {aConference.AccommodationCharge.ToString("c2")} \n Optional Services Charge: {aConference.OptionalServiceCharge.ToString("c2")} \n Discounts: {aConference.Discount.ToString("c2")} \n Total Charges: {aConference.TotalCharge.ToString("c2")}";
+            string Results = $"Accommodation Charge: {aConference.AccommodationCharge.ToString("c2")} \n Optional Services Charge: {aConference.OptionalServiceCharge.ToString("c2")} \n Discounts: {aConference.Discount.ToString("c2")} \n Total Charges: {aConference.TotalCharge.ToString("c2")}";
 
                 // display the result in labl
 
-            lblResults.Text = strCharges; 
+            lblResults.Text = Results; 
         }
     }
 }
