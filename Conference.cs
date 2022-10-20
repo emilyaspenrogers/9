@@ -189,6 +189,7 @@ namespace ERogersProgram9
 
             if (numberOfAttendees >=75 && numberOfDays >= 5)
             {
+                // this is erroring out. I'm not sure why. Perhaps it's my call above to my ReturnAccomodationRate method in accommodationCharge? Perhaps it the entire ReturnAccomodationRate method that's wrong? 
                 discount = ((double)(Convert.ToDecimal(accomodationDiscount) * accommodationCharge) + ((double)(Convert.ToDecimal(optionalDiscount) * optionalServicesCharge);
             }
              else
