@@ -1,18 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace ERogersProgram9
 {
     #region "Enumeration"
 
     public enum AccomodationType
     {
-    // is adding 1,2 and 3 the right thing to do here? I then call to this enumeration in my switch method below 
-    //'ReturnAccomodationRate' and I dont' think I wrote this correctly. 
-        Single = 1,
-        Double = 2,
-        Suite = 3
+        Single,
+        Double,
+        Suite
     }
     #endregion
     class Conference
@@ -111,41 +105,61 @@ namespace ERogersProgram9
         #endregion
 
         #region "Instance Methods"
-            
-           //I have no clue if this is how you would write a switch method that returns the rates for the three accomodation choices  
 
-        private decimal ReturnAccomodationRate()
+        private decimal ReturnAccomodationRate(AccomodationType accomodationChoice)
         {
-            decimal rate = 0; 
-            switch(AccomodationChoice)
+            
+
+            switch (accomodationChoice)
             {
                 case AccomodationType.Single:
-                    rate = 83.61M;
-                    break;
+                    {
+                        return (decimal)(83.61 * (numberOfAttendees * numberOfDays));
+                    }
                 case AccomodationType.Double:
-                    rate = 56.74M;
-                    break;
+                    {
+                        return (decimal)(56.74 * (numberOfAttendees * numberOfDays));
+                    }
                 case AccomodationType.Suite:
-                    rate = 101.95M;
-                    break;
+                    {
+                        return (decimal)(101.95 * (numberOfAttendees * numberOfDays));
+                    }
             }
-            return rate; 
+            return AccommodationCharge;
         }
 
-        private decimal CalculateConferenceCharge(int numberOfAttendees, int numberOfDays, AccomodationType accomodationChoice, bool internetAccess, bool recCenterAccess)
+        private void CalculateConferenceCharge(int numberOfAttendees, int numberOfDays, AccomodationType accomodationChoice, bool internetAccess, bool recCenterAccess)
         {
             const decimal dailyInternet = 7.28M;
             const decimal dailyRec = 6.13M;
             const double accomodationDiscount = .12;
             const double optionalDiscount = .075;
 
-
-            decimal accommodationCharge = ReturnAccomodationRate() * (numberOfAttendees * numberOfDays);
+            decimal accommodationCharge = ReturnAccomodationRate(AccomodationChoice);
+            //decimal accommodationCharge = ReturnAccomodationRate() * (numberOfAttendees * numberOfDays);
             decimal totalInternetCharge = dailyInternet * (numberOfDays * numberOfAttendees);
             decimal totalRecCenterCharge = dailyRec * (numberOfDays * numberOfAttendees);
             decimal optionalServicesCharge = totalInternetCharge + totalRecCenterCharge;
             decimal totalCharge;
             decimal discount;
+
+
+            if (internetAccess == true && recCenterAccess == true)
+            {
+                optionalServicesCharge = totalInternetCharge + totalRecCenterCharge;
+            }
+            else if (internetAccess == true && recCenterAccess == false)
+            {
+                optionalServicesCharge = totalInternetCharge;
+            }
+            else if (recCenterAccess == true && internetAccess == false)
+            {
+                optionalServicesCharge = totalRecCenterCharge;
+            }
+            else
+            {
+                optionalServicesCharge = 0;
+            }
 
             if (numberOfAttendees >=75 && numberOfDays >= 5)
             {
@@ -156,30 +170,4 @@ namespace ERogersProgram9
                 discount = 0; 
             }
 
-            if (totalInternetCharge > 0 && totalRecCenterCharge > 0 )
-            {
-                optionalServicesCharge = totalInternetCharge + totalRecCenterCharge;
-            }
-            else if (totalRecCenterCharge > 0 && totalInternetCharge == 0)
-            {
-                optionalServicesCharge = totalRecCenterCharge;
-            }
-            else if (totalInternetCharge > 0 && totalRecCenterCharge == 0)
-            {
-                optionalServicesCharge = totalInternetCharge;
-            }
-            else
-            {
-                optionalServicesCharge = 0; 
-            }
-
             totalCharge = accommodationCharge + optionalServicesCharge - discount;
-
-            return totalCharge;
-
-            #endregion
-        }
-
-    }
-
-}
