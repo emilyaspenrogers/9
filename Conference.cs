@@ -156,7 +156,7 @@ namespace ERogersProgram9
             const decimal accomodationDiscount = (decimal).12;
             const decimal optionalDiscount = (decimal).075;
 
-            //so i previously had my Auto Implamented properties listed in this method i.e "decimal Discount, decimal OptionalServiceCharge = ...", 
+            //so i previously had my Auto Implamented properties listed in this method i.e "decimal discount, decimal optionalServiceCharge = ...", 
             //by keeping those here, it was preventin these methods from 'setting' the properties above. 
             // I removed these, only leaving Accommodation Charge and that now seems to be returning values on my form when I run the program. 
             //I still can't get the Discount to work though. 
