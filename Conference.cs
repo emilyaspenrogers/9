@@ -90,7 +90,7 @@ namespace ERogersProgram9
 
         public string NameOfConference { get; set; }
         public decimal AccommodationCharge { get; private set; }
-        public decimal OptionalServiceCharge { get; private set; }
+        public decimal OptionalServicesCharge { get; private set; }
         public decimal Discount { get; private set; }
         public decimal TotalCharge { get; private set; }
 
@@ -138,43 +138,43 @@ namespace ERogersProgram9
             const double optionalDiscount = .075;
 
 
-            decimal accommodationCharge = ReturnAccomodationRate() * (numberOfAttendees * numberOfDays);
-            decimal totalInternetCharge = dailyInternet * (numberOfDays * numberOfAttendees);
-            decimal totalRecCenterCharge = dailyRec * (numberOfDays * numberOfAttendees);
-            decimal optionalServicesCharge = totalInternetCharge + totalRecCenterCharge;
-            decimal totalCharge;
-            decimal discount;
+            decimal AccommodationCharge = ReturnAccomodationRate() * (numberOfAttendees * numberOfDays);
+            decimal TotalInternetCharge = dailyInternet * (numberOfDays * numberOfAttendees);
+            decimal TotalRecCenterCharge = dailyRec * (numberOfDays * numberOfAttendees);
+            decimal OptionalServicesCharge = TotalInternetCharge + TotalRecCenterCharge;
+            decimal TotalCharge;
+            decimal Discount;
 
             if (numberOfAttendees >= 75 && numberOfDays >= 5)
             {
                 
-                discount = ((decimal)accomodationDiscount * accommodationCharge) + ((decimal)optionalDiscount * optionalServicesCharge);
+                Discount = ((decimal)accomodationDiscount * AccommodationCharge) + ((decimal)optionalDiscount * OptionalServicesCharge);
             }
             else
             {
-                discount = 0;
+                Discount = 0;
             }
 
-            if (totalInternetCharge > 0 && totalRecCenterCharge > 0)
+            if (TotalInternetCharge > 0 && TotalRecCenterCharge > 0)
             {
-                optionalServicesCharge = totalInternetCharge + totalRecCenterCharge;
+                OptionalServicesCharge = TotalInternetCharge + TotalRecCenterCharge;
             }
-            else if (totalRecCenterCharge > 0 && totalInternetCharge == 0)
+            else if (TotalRecCenterCharge > 0 && TotalInternetCharge == 0)
             {
-                optionalServicesCharge = totalRecCenterCharge;
+                OptionalServicesCharge = TotalRecCenterCharge;
             }
-            else if (totalInternetCharge > 0 && totalRecCenterCharge == 0)
+            else if (TotalInternetCharge > 0 && TotalRecCenterCharge == 0)
             {
-                optionalServicesCharge = totalInternetCharge;
+                OptionalServicesCharge = TotalInternetCharge;
             }
             else
             {
-                optionalServicesCharge = 0;
+                OptionalServicesCharge = 0;
             }
 
-            totalCharge = accommodationCharge + optionalServicesCharge - discount;
+            TotalCharge = AccommodationCharge + OptionalServicesCharge - Discount;
 
-            return totalCharge;
+            return TotalCharge;
 
             #endregion
         }
@@ -182,5 +182,3 @@ namespace ERogersProgram9
     }
 
 }
-
-
