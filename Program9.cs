@@ -10,21 +10,19 @@ namespace ERogersProgram9
 {
     public partial class Program9 : Form
     {
-    
-    //are these my variable declarations? 
+       
+        public Program9()
+        {
+
+            InitializeComponent();
+        }
+        //declare class level variables
+
         private Conference aConference;
         private string name;
         private int numberOfAttendees, numberOfDays;
         private bool internetAccess, recCenterAccess;
         private AccomodationType accomodationChoice;
-
-        public Program9()
-        {
-
-            InitializeComponent();
-
-
-        }
 
         private void btnCreateConference_Click(object sender, EventArgs e)
         {
@@ -47,6 +45,8 @@ namespace ERogersProgram9
             //cal Dispaly Charges Method
 
             DisplayCharges();
+
+            // disable/enable controls
 
             tbxName.Enabled = false;
             btnCreateConference.Enabled = false;
@@ -115,6 +115,8 @@ namespace ERogersProgram9
 
         private void AssignInputs()
         {
+
+
             name = tbxName.Text;
             numberOfAttendees = Convert.ToInt32(numNumberOfAttendees.Value);
             numberOfDays = Convert.ToInt32(numNumberOfNights.Value);
@@ -140,7 +142,7 @@ namespace ERogersProgram9
         {
             //prepare message to dispaly
 
-            string Results = $"Accommodation Charge: {aConference.AccommodationCharge.ToString("C")} \n Optional Services Charge: {aConference.OptionalServiceCharge.ToString("C")} \n Discounts: {aConference.Discount.ToString("C")} \n Total Charges: {aConference.TotalCharge.ToString("C")}";
+            string Results = $"Accommodation Charge: {aConference.AccommodationCharge.ToString("C")} \n Optional Services Charge: {aConference.OptionalServicesCharge.ToString("C")} \n Discounts: {aConference.Discount.ToString("C")} \n Total Charges: {aConference.TotalCharge.ToString("C")}";
 
                 // display the result in labl
 
