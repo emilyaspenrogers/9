@@ -10,6 +10,8 @@ namespace ERogersProgram9
 {
     public partial class Program9 : Form
     {
+    
+    //are these my variable declarations? 
         private Conference aConference;
         private string name;
         private int numberOfAttendees, numberOfDays;
@@ -138,7 +140,7 @@ namespace ERogersProgram9
         {
             //prepare message to dispaly
 
-            string Results = $"Accommodation Charge: {aConference.AccommodationCharge.ToString("c2")} \n Optional Services Charge: {aConference.OptionalServiceCharge.ToString("c2")} \n Discounts: {aConference.Discount.ToString("c2")} \n Total Charges: {aConference.TotalCharge.ToString("c2")}";
+            string Results = $"Accommodation Charge: {aConference.AccommodationCharge.ToString("C")} \n Optional Services Charge: {aConference.OptionalServiceCharge.ToString("C")} \n Discounts: {aConference.Discount.ToString("C")} \n Total Charges: {aConference.TotalCharge.ToString("C")}";
 
                 // display the result in labl
 
