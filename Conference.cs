@@ -8,6 +8,7 @@ namespace ERogersProgram9
 
     public enum AccomodationType
     {
+     
         Single,
         Double,
         Suite
@@ -49,7 +50,7 @@ namespace ERogersProgram9
                 CalculateConferenceCharge(numberOfAttendees, numberOfDays, accomodationChoice, internetAccess, recCenterAccess);
             }
         }
-        
+
         public bool InternetAccess
         {
             get
@@ -86,7 +87,7 @@ namespace ERogersProgram9
                 CalculateConferenceCharge(numberOfAttendees, numberOfDays, accomodationChoice, internetAccess, recCenterAccess);
             }
         }
-        
+
         public string NameOfConference { get; set; }
         public decimal AccommodationCharge { get; private set; }
         public decimal OptionalServiceCharge { get; private set; }
@@ -104,122 +105,76 @@ namespace ERogersProgram9
             NumberOfDays = numberOfDays;
             AccomodationChoice = accomodationChoice;
             InternetAccess = internetAccess;
-            RecCenterAccess = recCenterAccess; 
+            RecCenterAccess = recCenterAccess;
         }
         #endregion
 
         #region "Instance Methods"
 
-        //private decimal ReturnAccomodationRate(AccomodationType accomodationChoice)
-        //{
-
-
-        //    switch (accomodationChoice)
-        //    {
-        //        case AccomodationType.Single:
-        //            {
-        //                return (decimal)(83.61 * (numberOfAttendees * numberOfDays));
-        //            }
-        //        case AccomodationType.Double:
-        //            {
-        //                return (decimal)(56.74 * (numberOfAttendees * numberOfDays));
-        //            }
-        //        case AccomodationType.Suite:
-        //            {
-        //                return (decimal)(101.95 * (numberOfAttendees * numberOfDays));
-        //            }
-        //    }
-        //    return AccommodationCharge;
-        //}
-
-        private decimal ReturnAccomodationRate(AccomodationType accomodationChoice)
+        
+        private decimal ReturnAccomodationRate()
         {
-
-
-            switch (accomodationChoice)
+            decimal rate = 0;
+            switch (AccomodationChoice)
             {
                 case AccomodationType.Single:
-                    {
-                        return (decimal)(83.61);
-                    }
+                    rate = 83.61M;
+                    break;
                 case AccomodationType.Double:
-                    {
-                        return (decimal)(56.74);
-                    }
+                    rate = 56.74M;
+                    break;
                 case AccomodationType.Suite:
-                    {
-                        return (decimal)(101.95);
-                    }
+                    rate = 101.95M;
+                    break;
             }
-            return ReturnAccomodationRate(accomodationChoice);
+            return rate;
         }
 
-        private void CalculateConferenceCharge(int numberOfAttendees, int numberOfDays, AccomodationType accomodationChoice, bool internetAccess, bool recCenterAccess)
+        private decimal CalculateConferenceCharge(int numberOfAttendees, int numberOfDays, AccomodationType accomodationChoice, bool internetAccess, bool recCenterAccess)
         {
             const decimal dailyInternet = 7.28M;
             const decimal dailyRec = 6.13M;
             const double accomodationDiscount = .12;
             const double optionalDiscount = .075;
 
-            //decimal accommodationCharge = ReturnAccomodationRate(AccomodationChoice);
-            decimal accommodationCharge = ReturnAccomodationRate(accomodationChoice) * (numberOfAttendees * numberOfDays);
+
+            decimal accommodationCharge = ReturnAccomodationRate() * (numberOfAttendees * numberOfDays);
             decimal totalInternetCharge = dailyInternet * (numberOfDays * numberOfAttendees);
             decimal totalRecCenterCharge = dailyRec * (numberOfDays * numberOfAttendees);
             decimal optionalServicesCharge = totalInternetCharge + totalRecCenterCharge;
             decimal totalCharge;
             decimal discount;
 
+            if (numberOfAttendees >= 75 && numberOfDays >= 5)
+            {
+                
+                discount = ((decimal)accomodationDiscount * accommodationCharge) + ((decimal)optionalDiscount * optionalServicesCharge);
+            }
+            else
+            {
+                discount = 0;
+            }
 
-            if (internetAccess == true && recCenterAccess == true)
+            if (totalInternetCharge > 0 && totalRecCenterCharge > 0)
             {
                 optionalServicesCharge = totalInternetCharge + totalRecCenterCharge;
             }
-            else if (internetAccess == true && recCenterAccess == false)
-            {
-                optionalServicesCharge = totalInternetCharge;
-            }
-            else if (recCenterAccess == true && internetAccess == false)
+            else if (totalRecCenterCharge > 0 && totalInternetCharge == 0)
             {
                 optionalServicesCharge = totalRecCenterCharge;
+            }
+            else if (totalInternetCharge > 0 && totalRecCenterCharge == 0)
+            {
+                optionalServicesCharge = totalInternetCharge;
             }
             else
             {
                 optionalServicesCharge = 0;
             }
 
-            if (numberOfAttendees >=75 && numberOfDays >= 5)
-            {
-                // this is erroring out. I'm not sure why. Perhaps it's my call above to my ReturnAccomodationRate method in accommodationCharge? Perhaps it the entire ReturnAccomodationRate method that's wrong? 
-                discount = ((double)(Convert.ToDecimal(accomodationDiscount) * accommodationCharge) + ((double)(Convert.ToDecimal(optionalDiscount) * optionalServicesCharge);
-            }
-             else
-            {
-                discount = 0; 
-            }
-
-          
-
-            //need to update code below that determines whether or not internet access and rec access was selected or not i.e. 
-            // if (internetaccess is selected { figure out totalinternet charge }. 
-
-            //if (totalInternetCharge > 0 && totalRecCenterCharge > 0 )
-            //{
-            //    optionalServicesCharge = totalInternetCharge + totalRecCenterCharge;
-            //}
-            //else if (totalRecCenterCharge > 0 && totalInternetCharge == 0)
-            //{
-            //    optionalServicesCharge = totalRecCenterCharge;
-            //}
-            //else if (totalInternetCharge > 0 && totalRecCenterCharge == 0)
-            //{
-            //    optionalServicesCharge = totalInternetCharge;
-            //}
-            //else
-            //{
-            //    optionalServicesCharge = 0; 
-            //}
-
             totalCharge = accommodationCharge + optionalServicesCharge - discount;
+
+            return totalCharge;
 
             #endregion
         }
@@ -227,3 +182,5 @@ namespace ERogersProgram9
     }
 
 }
+
+
