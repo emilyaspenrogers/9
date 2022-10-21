@@ -1,3 +1,13 @@
+/*
+ * Project: Assignment Set 4 - Program 9
+ * Date: October 2022
+ * Developed by: ER
+ * Class Name: Conference
+ * Last modified: 10/21/2022
+ * Descriptions: Using Business Logic class calculate and determine the cost of a conference and apply he appropriate charges and discounts based on different user selections.
+ */
+
+
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -5,6 +15,8 @@ using System.Text;
 namespace ERogersProgram9
 {
     #region "Enumeration"
+
+    // set the enumerations for accomodation types for class 
 
     public enum AccomodationType
     {
@@ -18,6 +30,8 @@ namespace ERogersProgram9
     {
         #region "Fields"
 
+        //pricate fields 
+
         private int numberOfAttendees, numberOfDays;
         private AccomodationType accomodationChoice;
         private bool internetAccess, recCenterAccess;
@@ -26,6 +40,7 @@ namespace ERogersProgram9
 
         #region "Properties"
 
+        // using two step process to set the properties of the above fields 
         public int NumberOfAttendees
         {
             get
@@ -88,6 +103,8 @@ namespace ERogersProgram9
             }
         }
 
+        // auto implamented properties 
+
         public string NameOfConference { get; set; }
         public decimal AccommodationCharge { get; private set; }
         public decimal OptionalServicesCharge { get; private set; }
@@ -97,6 +114,8 @@ namespace ERogersProgram9
         #endregion
 
         #region "Constructors"
+
+        // constructor to instantiate Conference object
 
         public Conference(string name, int numberOfAttendees, int numberOfDays, AccomodationType accomodationChoice, bool internetAccess, bool recCenterAccess)
         {
@@ -134,43 +153,38 @@ namespace ERogersProgram9
         {
             const decimal dailyInternet = 7.28M;
             const decimal dailyRec = 6.13M;
-            const double accomodationDiscount = .12;
-            const double optionalDiscount = .075;
+            const decimal accomodationDiscount = (decimal).12;
+            const decimal optionalDiscount = (decimal).075;
 
-
-            decimal AccommodationCharge = ReturnAccomodationRate() * (numberOfAttendees * numberOfDays);
-            decimal TotalInternetCharge = dailyInternet * (numberOfDays * numberOfAttendees);
-            decimal TotalRecCenterCharge = dailyRec * (numberOfDays * numberOfAttendees);
-            decimal OptionalServicesCharge = TotalInternetCharge + TotalRecCenterCharge;
-            decimal TotalCharge;
-            decimal Discount;
+            //so i previously had a lot 'Dicount' 'Optional Service Charge' Total Charge' ect listed here, by keeping those here, it was preventin these methods from 'setting' the properties. 
+            // I removed these, only leaving Accommodation Charge and that now seems to be returning values on my form when I run the program. I still can't get the Discount to work though. 
+            
+            AccommodationCharge = ReturnAccomodationRate() * (numberOfAttendees * numberOfDays);
+           
 
             if (numberOfAttendees >= 75 && numberOfDays >= 5)
             {
-                
-                Discount = ((decimal)accomodationDiscount * AccommodationCharge) + ((decimal)optionalDiscount * OptionalServicesCharge);
+                //I fucked with this formula to see if that changed anything in my results but no luck. not sure if it's the const above that causing the issues :/ 
+                Discount = (accomodationDiscount * AccommodationCharge) + (optionalDiscount * OptionalServicesCharge);
             }
             else
             {
                 Discount = 0;
             }
 
-            if (TotalInternetCharge > 0 && TotalRecCenterCharge > 0)
+            if (internetAccess == true && recCenterAccess == true)
             {
-                OptionalServicesCharge = TotalInternetCharge + TotalRecCenterCharge;
+                OptionalServicesCharge = (dailyInternet + dailyRec) * (numberOfDays * numberOfAttendees);
             }
-            else if (TotalRecCenterCharge > 0 && TotalInternetCharge == 0)
+            else if (internetAccess == true)
             {
-                OptionalServicesCharge = TotalRecCenterCharge;
+                OptionalServicesCharge = dailyInternet * (numberOfDays * numberOfAttendees);
             }
-            else if (TotalInternetCharge > 0 && TotalRecCenterCharge == 0)
+            else if (recCenterAccess == true)
             {
-                OptionalServicesCharge = TotalInternetCharge;
+                OptionalServicesCharge = dailyRec * (numberOfDays * numberOfAttendees);
             }
-            else
-            {
-                OptionalServicesCharge = 0;
-            }
+      
 
             TotalCharge = AccommodationCharge + OptionalServicesCharge - Discount;
 
@@ -182,3 +196,5 @@ namespace ERogersProgram9
     }
 
 }
+
+
